@@ -19,12 +19,12 @@ func main() {
 		cmd.Stdout = colorable.NewColorableStdout()
 		cmd.Stderr = colorable.NewColorableStderr()
 		err := cmd.Run()
+		cmd.Stdout.Write([]byte("\x1b[39m"))
+		cmd.Stderr.Write([]byte("\x1b[39m"))
 		if err != nil {
 			if cmd.ProcessState != nil {
 				os.Exit(cmd.ProcessState.Sys().(syscall.WaitStatus).ExitStatus())
 			}
-			cmd.Stdout.Write([]byte("\x1b[39m"))
-			cmd.Stderr.Write([]byte("\x1b[39m"))
 			os.Exit(1)
 		}
 	}
